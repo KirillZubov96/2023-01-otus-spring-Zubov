@@ -16,4 +16,9 @@ public class Question {
     @Getter
     @Setter
     private int answerNumber;
+
+    @Override
+    public String toString() {
+        return ("Вопрос: " + question + "; Варианты ответов: " + answers + "; Номер правильного ответа: " + answerNumber);
+    }
 }

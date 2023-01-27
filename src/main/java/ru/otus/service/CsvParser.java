@@ -28,7 +28,7 @@ public class CsvParser {
                 List<String[]> questionsAndAnswers = csvReader.readAll();
 
                 for (String[] line : questionsAndAnswers) {
-                    Question q = new Question(line[0], Arrays.asList(line).subList(2, line.length - 1), line.length);
+                    Question q = new Question(line[0], Arrays.asList(line).subList(1, line.length - 1), Integer.valueOf(line[line.length - 1]));
                     questions.add(q);
                 }
             }
