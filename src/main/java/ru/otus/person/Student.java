@@ -1,6 +1,7 @@
 package ru.otus.person;
 
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.service.ConsoleIOService;
 
@@ -15,6 +16,7 @@ public class Student {
 
     private ConsoleIOService consoleIOService;
 
+    @Autowired
     public Student() {
         this.consoleIOService = new ConsoleIOService();
         createStudentFromConsole();
