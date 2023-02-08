@@ -8,7 +8,7 @@ import ru.otus.quiz.QuizImpl;
 public class QuizImplTest {
 
     @Test
-    void getPassedTrue() {
+    void readFile() {
         QuizImpl quiz = Mockito.mock(QuizImpl.class);
         quiz.readQuestionsFromFile();
     }

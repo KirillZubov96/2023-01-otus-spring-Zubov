@@ -9,7 +9,7 @@ import ru.otus.service.ApplicationRunner;
 public class ApplicationRunnerTest {
 
     @Test
-    void getPassedTrue() {
+    void runApp() {
         QuizImpl quiz = Mockito.mock(QuizImpl.class);
         Student student = Mockito.mock(Student.class);
 
