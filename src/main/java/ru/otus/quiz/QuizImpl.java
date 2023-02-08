@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import ru.otus.person.Student;
 import ru.otus.question.Question;
 
 import java.io.FileReader;
@@ -16,17 +14,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 @Service
 @PropertySource("application.properties")
 public class QuizImpl implements Quiz {
-    private String fileName;
+    private final String fileName;
 
     @Getter
     private int countOfCorrectAnswers;
 
-    private int answersCorrectsNeededForPassed;
+    private final int answersCorrectsNeededForPassed;
 
     public QuizImpl(@Value("${questionFileCsv}") String fileName, @Value("${correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed) {
         this.fileName = fileName;
@@ -54,13 +51,13 @@ public class QuizImpl implements Quiz {
     }
 
     public void checkCorrectAnswer(Question question, int answerNumber) {
-        if (question.getCorrectAnswerNumber()==answerNumber) {
+        if (question.getCorrectAnswerNumber() == answerNumber) {
             countOfCorrectAnswers++;
         }
     }
 
     public boolean isQuizPassed() {
-        return (countOfCorrectAnswers>=answersCorrectsNeededForPassed);
+        return (countOfCorrectAnswers >= answersCorrectsNeededForPassed);
     }
 
 }

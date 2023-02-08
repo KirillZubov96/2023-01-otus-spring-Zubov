@@ -1,7 +1,6 @@
 package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.otus.person.Student;
@@ -14,11 +13,12 @@ import java.util.List;
 @PropertySource("application.properties")
 public class ApplicationRunner {
 
-    private Student student;
-    private List<Question> questions;
-    private ConsoleIOService consoleIOService;
+    private final Student student;
+    private final List<Question> questions;
+    private final ConsoleIOService consoleIOService;
 
-    private QuizImpl quiz;
+    private final QuizImpl quiz;
+
     @Autowired
     public ApplicationRunner(QuizImpl quiz, Student student) {
         this.quiz = quiz;
@@ -30,7 +30,7 @@ public class ApplicationRunner {
     public void run() {
         System.out.println("Welcome to test, " + student.getStudentName() + " " + student.getStudentFirstName() + "!");
         for (int i = 0; i < questions.size(); i++) {
-            System.out.println("Question №" + (i+1) + ": " +questions.get(i).getQuestion());
+            System.out.println("Question №" + (i + 1) + ": " + questions.get(i).getQuestion());
             System.out.println("Answers: " + questions.get(i).getAnswers());
             System.out.print("Input your answer number: ");
             Integer answerNumber = Integer.parseInt(consoleIOService.inputValue());
@@ -39,6 +39,7 @@ public class ApplicationRunner {
         if (quiz.isQuizPassed()) {
             System.out.println("Test passed!");
         } else {
-            System.out.println("Test failed!");}
+            System.out.println("Test failed!");
+        }
     }
 }
