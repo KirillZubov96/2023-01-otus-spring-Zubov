@@ -10,7 +10,6 @@ import ru.otus.quiz.QuizImpl;
 import java.util.List;
 
 @Service
-@PropertySource("application.properties")
 public class ApplicationRunner {
 
     private final Student student;
