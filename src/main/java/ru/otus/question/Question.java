@@ -3,22 +3,24 @@ package ru.otus.question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @AllArgsConstructor
+@Getter
+@Setter
 public class Question {
-    @Getter
-    @Setter
+
     private String question;
-    @Getter
-    @Setter
+
     private List<String> answers;
-    @Getter
-    @Setter
-    private int answerNumber;
+
+    private int correctAnswerNumber;
+
 
     @Override
     public String toString() {
-        return ("Вопрос: " + question + "; Варианты ответов: " + answers + "; Номер правильного ответа: " + answerNumber);
+        return ("Вопрос: " + question + "; Варианты ответов: " + answers + "; Номер правильного ответа: " + correctAnswerNumber);
     }
 }
