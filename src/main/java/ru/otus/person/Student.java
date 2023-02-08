@@ -26,7 +26,6 @@ public class Student {
     }
 
     private Student createStudentFromConsole() {
-        Scanner in = new Scanner(System.in);
         System.out.print("Введите имя: ");
         studentName = consoleIOService.inputValue();
         System.out.print("Введите Фамилию: ");
