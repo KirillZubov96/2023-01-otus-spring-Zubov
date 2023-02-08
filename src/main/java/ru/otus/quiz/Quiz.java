@@ -8,4 +8,8 @@ public interface Quiz {
 
     List<Question> readQuestionsFromFile();
 
+    void checkCorrectAnswer(Question question, int answerNumber);
+
+    boolean isQuizPassed();
+
 }
