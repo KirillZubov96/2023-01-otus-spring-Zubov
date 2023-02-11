@@ -2,36 +2,32 @@ package ru.otus.person;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.service.ConsoleIOService;
 
-import java.util.Scanner;
-
 @Getter
-@Repository
-public class Student {
+@Component
+public class PersonDao {
 
     private String studentName;
     private String studentFirstName;
-
     private ConsoleIOService consoleIOService;
 
     @Autowired
-    public Student() {
-        this.consoleIOService = new ConsoleIOService();
-        createStudentFromConsole();
+    public PersonDao() {
     }
 
-    public Student(String name, String firstName) {
+    public PersonDao(String name, String firstName) {
         this.studentName = name;
         this.studentFirstName = firstName;
     }
 
-    private Student createStudentFromConsole() {
-        System.out.print("Введите имя: ");
+    public PersonDao createStudentFromConsole() {
+        consoleIOService = new ConsoleIOService();
+        consoleIOService.outputValue("Введите имя: ");
         studentName = consoleIOService.inputValue();
-        System.out.print("Введите Фамилию: ");
+        consoleIOService.outputValue("Введите Фамилию: ");
         studentFirstName = consoleIOService.inputValue();
-        return new Student(studentName, studentFirstName);
+        return new PersonDao(studentName, studentFirstName);
     }
 }

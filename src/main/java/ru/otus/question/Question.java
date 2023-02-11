@@ -16,10 +16,4 @@ public class Question {
     private List<String> answers;
 
     private int correctAnswerNumber;
-
-
-    @Override
-    public String toString() {
-        return ("Вопрос: " + question + "; Варианты ответов: " + answers + "; Номер правильного ответа: " + correctAnswerNumber);
-    }
 }

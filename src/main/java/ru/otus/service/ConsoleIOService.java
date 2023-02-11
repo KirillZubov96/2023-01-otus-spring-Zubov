@@ -12,4 +12,8 @@ public class ConsoleIOService {
     public String inputValue() {
         return sc.nextLine();
     }
+
+    public void outputValue(String value) {
+        System.out.println(value);
+    }
 }
