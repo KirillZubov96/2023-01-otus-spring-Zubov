@@ -19,11 +19,9 @@ import java.util.List;
 @PropertySource("application.properties")
 public class QuizImpl implements Quiz {
     private final String fileName;
-
+    private final int answersCorrectsNeededForPassed;
     @Getter
     private int countOfCorrectAnswers;
-
-    private final int answersCorrectsNeededForPassed;
 
     public QuizImpl(@Value("${questionFileCsv}") String fileName, @Value("${correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed) {
         this.fileName = fileName;
@@ -50,12 +48,14 @@ public class QuizImpl implements Quiz {
         return questions;
     }
 
+    @Override
     public void checkCorrectAnswer(Question question, int answerNumber) {
         if (question.getCorrectAnswerNumber() == answerNumber) {
             countOfCorrectAnswers++;
         }
     }
 
+    @Override
     public boolean isQuizPassed() {
         return (countOfCorrectAnswers >= answersCorrectsNeededForPassed);
     }
