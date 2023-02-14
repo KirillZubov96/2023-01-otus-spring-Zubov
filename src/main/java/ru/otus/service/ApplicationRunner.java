@@ -10,11 +10,10 @@ import java.util.List;
 @Service
 public class ApplicationRunner {
 
-    private Person person;
-    private List<Question> questions;
     private final ConsoleIOService consoleIOService;
-
     private final QuizImpl quiz;
+    private final Person person;
+    private List<Question> questions;
 
     public ApplicationRunner(QuizImpl quiz, Person person, ConsoleIOService consoleIOService) {
         this.quiz = quiz;
