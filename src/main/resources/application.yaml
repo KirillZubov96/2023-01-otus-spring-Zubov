@@ -1,0 +1,3 @@
+application:
+  questionFileCsv: "questions.csv"
+  correctAnswerCountForPassedTest: 4

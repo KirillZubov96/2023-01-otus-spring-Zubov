@@ -20,9 +20,10 @@ public class ApplicationRunner {
         this.quiz = quiz;
         this.person = person;
         this.consoleIOService = consoleIOService;
+        run();
     }
 
-    public void run() {
+    private void run() {
         person.createStudentFromConsole();
         this.questions = quiz.readQuestionsFromFile();
         consoleIOService.outputValue("Welcome to test, " + person.getStudentName() + " " + person.getStudentFirstName() + "!");

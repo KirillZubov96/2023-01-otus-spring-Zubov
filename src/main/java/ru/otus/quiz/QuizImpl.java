@@ -16,14 +16,13 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@PropertySource("application.properties")
 public class QuizImpl implements Quiz {
     private final String fileName;
     private final int answersCorrectsNeededForPassed;
     @Getter
     private int countOfCorrectAnswers;
 
-    public QuizImpl(@Value("${questionFileCsv}") String fileName, @Value("${correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed) {
+    public QuizImpl(@Value("${application.questionFileCsv}") String fileName, @Value("${application.correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed) {
         this.fileName = fileName;
         this.countOfCorrectAnswers = 0;
         this.answersCorrectsNeededForPassed = Integer.parseInt(answersCorrectsNeededForPassed);
