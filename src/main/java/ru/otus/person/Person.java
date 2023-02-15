@@ -17,9 +17,9 @@ public class Person {
     }
 
     public void createStudentFromConsole() {
-        consoleIOService.outputValue("Введите имя: ");
+        consoleIOService.outputValueByParam("name.input");
         this.studentName = consoleIOService.inputValue();
-        consoleIOService.outputValue("Введите Фамилию: ");
+        consoleIOService.outputValueByParam("firstname.input");
         this.studentFirstName = consoleIOService.inputValue();
     }
 }

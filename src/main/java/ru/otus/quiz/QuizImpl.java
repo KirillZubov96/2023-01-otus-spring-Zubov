@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class QuizImpl implements Quiz {
@@ -22,16 +23,19 @@ public class QuizImpl implements Quiz {
     @Getter
     private int countOfCorrectAnswers;
 
-    public QuizImpl(@Value("${application.questionFileCsv}") String fileName, @Value("${application.correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed) {
+    private final Locale locale;
+
+    public QuizImpl(@Value("${application.questionFileCsv}") String fileName, @Value("${application.correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed, @Value("${application.locale}") Locale locale) {
         this.fileName = fileName;
         this.countOfCorrectAnswers = 0;
         this.answersCorrectsNeededForPassed = Integer.parseInt(answersCorrectsNeededForPassed);
+        this.locale = locale;
     }
 
     public List<Question> readQuestionsFromFile() {
         List<Question> questions = new ArrayList<>();
         try {
-            Resource resource = new ClassPathResource(fileName);
+            Resource resource = new ClassPathResource(String.format(fileName, locale));
 
             try (CSVReader csvReader = new CSVReader(new FileReader(resource.getURI().getPath()), ';')) {
                 List<String[]> questionsAndAnswers = csvReader.readAll();
