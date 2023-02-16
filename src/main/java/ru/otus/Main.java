@@ -1,16 +1,14 @@
 package ru.otus;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.otus.question.Question;
-import ru.otus.service.CsvParser;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import ru.otus.service.ApplicationRunner;
 
-import java.util.List;
-
+@ComponentScan
 public class Main {
     public static void main(String[] args) {
-        new ClassPathXmlApplicationContext("/spring-context.xml")
-                .getBean(CsvParser.class)
-                .readQuestionsFromFile().stream()
-                .forEach(question -> System.out.println(question.toString()));
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+        ApplicationRunner runner = context.getBean(ApplicationRunner.class);
+        runner.run();
     }
 }

@@ -1,8 +1,12 @@
-package ru.otus.service;
+package ru.otus.quiz;
 
 import com.opencsv.CSVReader;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 import ru.otus.question.Question;
 
 import java.io.FileReader;
@@ -11,12 +15,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CsvParser {
+@Service
+@PropertySource("application.properties")
+public class QuizImpl implements Quiz {
+    private final String fileName;
+    private final int answersCorrectsNeededForPassed;
+    @Getter
+    private int countOfCorrectAnswers;
 
-    private String fileName;
-
-    public CsvParser(String fileName) {
+    public QuizImpl(@Value("${questionFileCsv}") String fileName, @Value("${correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed) {
         this.fileName = fileName;
+        this.countOfCorrectAnswers = 0;
+        this.answersCorrectsNeededForPassed = Integer.parseInt(answersCorrectsNeededForPassed);
     }
 
     public List<Question> readQuestionsFromFile() {
@@ -37,4 +47,17 @@ public class CsvParser {
         }
         return questions;
     }
+
+    @Override
+    public void checkCorrectAnswer(Question question, int answerNumber) {
+        if (question.getCorrectAnswerNumber() == answerNumber) {
+            countOfCorrectAnswers++;
+        }
+    }
+
+    @Override
+    public boolean isQuizPassed() {
+        return (countOfCorrectAnswers >= answersCorrectsNeededForPassed);
+    }
+
 }
