@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import ru.otus.question.Question;
+import ru.otus.service.FileResourceService;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,31 +24,29 @@ public class QuizImpl implements Quiz {
     @Getter
     private int countOfCorrectAnswers;
 
+    private FileResourceService fileResourceService;
+
     private final Locale locale;
 
-    public QuizImpl(@Value("${application.questionFileCsv}") String fileName, @Value("${application.correctAnswerCountForPassedTest}") String answersCorrectsNeededForPassed, @Value("${application.locale}") Locale locale) {
+    public QuizImpl(@Value("${application.questionFileCsv}") String fileName,
+                    @Value("${application.correctAnswerCountForPassedTest}") Integer answersCorrectsNeededForPassed,
+                    @Value("${application.locale}") Locale locale,
+                    FileResourceService fileResourceService) {
         this.fileName = fileName;
         this.countOfCorrectAnswers = 0;
-        this.answersCorrectsNeededForPassed = Integer.parseInt(answersCorrectsNeededForPassed);
+        this.answersCorrectsNeededForPassed = answersCorrectsNeededForPassed;
         this.locale = locale;
+        this.fileResourceService = fileResourceService;
     }
 
+    @Override
     public List<Question> readQuestionsFromFile() {
         List<Question> questions = new ArrayList<>();
-        try {
-            Resource resource = new ClassPathResource(String.format(fileName, locale));
-
-            try (CSVReader csvReader = new CSVReader(new FileReader(resource.getURI().getPath()), ';')) {
-                List<String[]> questionsAndAnswers = csvReader.readAll();
-
+                List<String[]> questionsAndAnswers = fileResourceService.readCsvFileAsStringRows(fileResourceService.getFileFromResource(String.format(fileName, locale)));
                 for (String[] line : questionsAndAnswers) {
                     Question q = new Question(line[0], Arrays.asList(line).subList(1, line.length - 1), Integer.valueOf(line[line.length - 1]));
                     questions.add(q);
                 }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return questions;
     }
 
