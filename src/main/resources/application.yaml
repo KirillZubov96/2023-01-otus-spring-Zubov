@@ -6,4 +6,4 @@ spring:
 application:
   questionFileCsv: "questions_%s.csv"
   correctAnswerCountForPassedTest: 4
-  locale: en
+  locale: ru
