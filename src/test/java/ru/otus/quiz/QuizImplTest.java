@@ -1,8 +1,7 @@
-package quiz;
+package ru.otus.quiz;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.otus.quiz.QuizImpl;
 
 
 public class QuizImplTest {

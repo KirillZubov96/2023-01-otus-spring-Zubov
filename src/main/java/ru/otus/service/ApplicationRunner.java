@@ -1,42 +1,50 @@
 package ru.otus.service;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import ru.otus.person.Person;
+import ru.otus.person.PersonDao;
 import ru.otus.question.Question;
 import ru.otus.quiz.QuizImpl;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class ApplicationRunner {
 
-    private Person person;
-    private List<Question> questions;
     private final ConsoleIOService consoleIOService;
-
     private final QuizImpl quiz;
+    private final PersonDao personDao;
+    private List<Question> questions;
 
-    public ApplicationRunner(QuizImpl quiz, Person person, ConsoleIOService consoleIOService) {
+    private final Locale locale;
+
+    public ApplicationRunner(QuizImpl quiz, PersonDao personDao, ConsoleIOService consoleIOService, @Value("${application.locale}") Locale locale) {
         this.quiz = quiz;
-        this.person = person;
+        this.personDao = personDao;
         this.consoleIOService = consoleIOService;
+        this.locale = locale;
     }
 
-    public void run() {
-        person.createStudentFromConsole();
+    @PostConstruct
+    private void run() {
+        personDao.createStudentFromConsole();
         this.questions = quiz.readQuestionsFromFile();
-        consoleIOService.outputValue("Welcome to test, " + person.getStudentName() + " " + person.getStudentFirstName() + "!");
+        consoleIOService.outputValueByParam("welcome");
         for (int i = 0; i < questions.size(); i++) {
-            consoleIOService.outputValue("Question №" + (i + 1) + ": " + questions.get(i).getQuestion());
-            consoleIOService.outputValue("Answers: " + questions.get(i).getAnswers());
-            consoleIOService.outputValue("Input your answer number: ");
+            consoleIOService.outputStringValue(consoleIOService.getParamFromProperty("question") + ": " + questions.get(i).getQuestion());
+            consoleIOService.outputStringValue(consoleIOService.getParamFromProperty("answer") + " " + questions.get(i).getAnswers());
+            consoleIOService.outputValueByParam("input.answer");
             Integer answerNumber = Integer.parseInt(consoleIOService.inputValue());
             quiz.checkCorrectAnswer(questions.get(i), answerNumber);
         }
         if (quiz.isQuizPassed()) {
-            consoleIOService.outputValue("Test passed!");
+            consoleIOService.outputValueByParam("passed.test");
         } else {
-            consoleIOService.outputValue("Test failed!");
+            consoleIOService.outputValueByParam("failed.test");
         }
     }
 }

@@ -1,22 +1,22 @@
-package service;
+package ru.otus.service;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import ru.otus.person.Person;
+import ru.otus.person.PersonDao;
 import ru.otus.quiz.QuizImpl;
-import ru.otus.service.ApplicationRunner;
-import ru.otus.service.ConsoleIOService;
+
+import java.util.Locale;
 
 public class ApplicationRunnerTest {
 
     @Test
     void runApp() {
         QuizImpl quiz = Mockito.mock(QuizImpl.class);
-        Person person = Mockito.mock(Person.class);
+        PersonDao personDao = Mockito.mock(PersonDao.class);
         ConsoleIOService consoleIOService = Mockito.mock(ConsoleIOService.class);
+        Locale locale = Locale.getDefault();
 
-        ApplicationRunner runner = new ApplicationRunner(quiz, person, consoleIOService);
-
-        runner.run();
+        new ApplicationRunner(quiz, personDao, consoleIOService, locale);
     }
 }
